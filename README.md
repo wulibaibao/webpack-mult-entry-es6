@@ -39,7 +39,12 @@ webpack 4.0 multiple entry project for ECMA2016
     package.json                        
 
 
-
+```
+/*
+* 如有问题可以联系我
+* 
+*/
+```
 
 - wulibaibao
 - Created at 2019/3/27 
