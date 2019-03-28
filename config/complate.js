@@ -1,36 +1,26 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path')
+const fs = require('fs')
+const DIRNAME_SRC = path.resolve('src')
 
-const pages = [
-    {
-        name : 'home' ,
-        title : '',
-    },
-    {
-        name : 'app' ,
-        title : '',
-    },
-]
+let complates = [], entry = {};
 
-let complates = []
-let entry = {}
+const mp = fs.readdirSync( DIRNAME_SRC ).filter( item => item.indexOf('.') === -1 )
 
-for( let x of pages ) {
+mp.map( item => {
     complates.push(
         new HtmlWebpackPlugin(
             { //可以模板，直接引用files对象，是webpack中state对象
-                title: x.title ? x.title : x.name,
-                chunks: [ x.name ],
-                filename: `${ x.name }/index.html`,
-                template : `${ path.resolve( 'src' ) }/${ x.name }/index.html`
+                title: item,
+                chunks: [ item ],
+                filename: `${ item }/index.html`,
+                template : path.join( DIRNAME_SRC , path.join( item , 'index.html') )
             }
         )
     )
-
-    entry[ x.name ] = `${ path.resolve( 'src' ) }/${ x.name }/index.js`
-}
+    entry[ item ] = path.join( DIRNAME_SRC , path.join( item , 'index.js') )
+})
 
 module.exports = {
-    complates,
-    entry,
+    complates , entry 
 }
